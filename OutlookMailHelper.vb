@@ -48,6 +48,7 @@
 
 
 Imports System.IO
+Imports System.Diagnostics
 Imports Microsoft.Office.Interop.Outlook
 
 Public Class OutlookMailHelper
@@ -90,6 +91,9 @@ Public Class OutlookMailHelper
             Catch ex As System.Exception
                 ' Outlook failed – fall back to mailto
             End Try
+
+
+
         End If
 
         ' 📨 Fallback to default mail client

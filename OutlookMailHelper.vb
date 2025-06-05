@@ -69,7 +69,11 @@ Public Class OutlookMailHelper
                 End If
 
 
-
+                Dim outlookPath As String = GetOutlookPath()
+                If Not String.IsNullOrEmpty(outlookPath) AndAlso File.Exists(outlookPath) Then
+                    Process.Start(outlookPath) ' Launch Outlook if not already open
+                    Threading.Thread.Sleep(1000) ' Optional: give it a moment to launch
+                End If
                 mail.Display()
                 Threading.Thread.Sleep(500)
                 Dim cleanBody As String = body.Trim().
@@ -122,6 +126,7 @@ Public Class OutlookMailHelper
             "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE"
         }
 
+
         For Each keyPath In outlookKeyPaths
             Dim path As String = CStr(Microsoft.Win32.Registry.GetValue(keyPath, "", Nothing))
             If Not String.IsNullOrEmpty(path) Then
@@ -131,5 +136,7 @@ Public Class OutlookMailHelper
 
         Return String.Empty
     End Function
+
+
 
 End Class

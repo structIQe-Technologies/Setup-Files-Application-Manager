@@ -57,7 +57,7 @@ Public Class OutlookMailHelper
 
         If IsOutlookInstalled() Then
             Try
-                MsgBox("Please close the Outlook Application first")
+                MsgBox("Please ensure outlook is closed")
                 ' Try using Outlook Interop
                 Dim outlookApp As New Application
                 Dim mail As MailItem = CType(outlookApp.CreateItem(OlItemType.olMailItem), MailItem)
@@ -83,7 +83,10 @@ Public Class OutlookMailHelper
                             Replace("\n", "<br>")
                 '  Dim customBodyHtml As String =                body.Trim().Replace(vbCrLf, "\n")
 
-                Dim customBodyHtml As String = "<p>" & cleanBody & "</p>"
+                Dim customBodyHtml As String = "<div style='font-family:Segoe UI, sans-serif; font-size:11pt;'>" &
+                                cleanBody &
+                                "</div>"
+
 
                 mail.HTMLBody = customBodyHtml & mail.HTMLBody
                 Return

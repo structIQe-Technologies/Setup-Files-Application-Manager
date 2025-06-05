@@ -56,6 +56,7 @@ Public Class OutlookMailHelper
 
         If IsOutlookInstalled() Then
             Try
+                MsgBox("Please close the Outlook Application first")
                 ' Try using Outlook Interop
                 Dim outlookApp As New Application
                 Dim mail As MailItem = CType(outlookApp.CreateItem(OlItemType.olMailItem), MailItem)
@@ -70,6 +71,7 @@ Public Class OutlookMailHelper
 
 
                 mail.Display()
+                Threading.Thread.Sleep(500)
                 Dim cleanBody As String = body.Trim().
                             Replace(vbCrLf, "<br>").
                             Replace(vbLf, "<br>").

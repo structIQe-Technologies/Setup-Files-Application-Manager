@@ -57,7 +57,7 @@ Public Class OutlookMailHelper
 
         If IsOutlookInstalled() Then
             Try
-                MsgBox("Please ensure outlook is closed")
+                MsgBox("Please ensure Outlook is closed", MsgBoxStyle.Exclamation, "Outlook Warning")
                 ' Try using Outlook Interop
                 Dim outlookApp As New Application
                 Dim mail As MailItem = CType(outlookApp.CreateItem(OlItemType.olMailItem), MailItem)
@@ -102,7 +102,7 @@ Public Class OutlookMailHelper
         ' 📨 Fallback to default mail client
         Try
             Dim safeSubject As String = Uri.EscapeDataString(subject)
-            Dim safeBody As String = Uri.EscapeDataString(body & vbCrLf & vbCrLf & "(Please attach the license file manually.)")
+            Dim safeBody As String = Uri.EscapeDataString(body & vbCrLf & vbCrLf & "*** IMPORTANT: Please attach the license file (.c2v) manually from your download folder. ***")
             Dim mailtoUri As String = $"mailto:{toAddress}?subject={safeSubject}&body={safeBody}"
 
             Process.Start(New ProcessStartInfo(mailtoUri) With {.UseShellExecute = True})
@@ -132,8 +132,6 @@ Public Class OutlookMailHelper
             "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE",
             "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE"
         }
-
-
         For Each keyPath In outlookKeyPaths
             Dim path As String = CStr(Microsoft.Win32.Registry.GetValue(keyPath, "", Nothing))
             If Not String.IsNullOrEmpty(path) Then
